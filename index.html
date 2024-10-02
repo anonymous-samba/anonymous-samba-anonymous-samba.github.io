@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Samba: Synchronized Set-of-Sequences Modeling for End-to-end Multiple Object Tracking">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image:src" content="http://https://sambamotr.github.io/dginstyle_logo_square.jpg">
+  <meta name="twitter:title" content="SambaMOTR">
+  <meta name="twitter:description" content="Synchronized Set-of-Sequences Modeling for End-to-end Multiple Object Tracking">
+  <meta name="twitter:creator" content="@mattiasegu">
+
+  <title>Samba: Synchronized Set-of-Sequences Modeling for End-to-end Multiple Object Tracking</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1FWSVCGZTG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-1FWSVCGZTG');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/logo.png" type="image/png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation" style="background-color: #f8f9fa; padding: 0rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow-x: auto;">
+    <div class="container is-max-desktop">
+      <div class="navbar-brand" style="display: flex; justify-content: center; width: 100%;">
+        <!-- Updated to allow horizontal scrolling on mobile -->
+        <a class="navbar-item" href="#abstract" style="font-weight: bold;">Abstract</a>
+        <a class="navbar-item" href="#SambaMOTR" style="font-weight: bold;">SambaMOTR</a>
+        <a class="navbar-item" href="#Samba" style="font-weight: bold;">Samba</a>
+        <a class="navbar-item" href="#results" style="font-weight: bold;">Results</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- Logo placed above the title -->
+            <img src="./static/images/logo.png" alt="SambaMOTR Logo" style="max-width: 150px; margin-bottom: 20px;">
+            <h1 class="title publication-title" style="font-size: 2.5rem;">Samba: Synchronized Set-of-Sequences Modeling for End-to-end Multiple Object Tracking</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    $(document).ready(function() {
+      let angle = 0;
+      setInterval(function() {
+        angle += 360/7;
+        $('#rotatingImage').css({
+          'transform': 'rotate(' + angle + 'deg)',
+          'transition': 'transform 0.5s'
+        });
+      }, 3000);
+    });
+  </script>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="columns is-centered">
+          <div class="column is-one-third">
+            <h4 class="title is-5 has-text-centered">DanceTrack</h4>
+            <video poster="" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/videos/teaser/dancetrack0058.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column is-one-third">
+            <h4 class="title is-5 has-text-centered">BFT</h4>
+            <video poster="" autoplay controls muted loop playsinline width="100%">
+              <!-- <source src="./static/videos/teaser/output_video" type="video/mp4"> -->
+              <source src="./static/videos/teaser/bft_An1009_crop.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column is-one-third">
+            <h4 class="title is-5 has-text-centered">SportsMOT</h4>
+            <video poster="" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/videos/teaser/sportsmot_v_4-EmEtrturE_c009.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border: 1px solid #e0e0e0; margin: 20px auto; width: 50%;">
+
+  <section class="section pt-0" id="abstract">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 has-text-centered" style="padding-top: 20px;">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Multiple object tracking in complex scenarios - such as coordinated dance performances, team sports, or dynamic animal groups - presents unique challenges. In these settings, objects frequently move in coordinated patterns, occlude each other, and exhibit long-term dependencies in their trajectories. However, it remains a key open research question on how to model long-range dependencies within tracklets, interdependencies among tracklets, and the associated temporal occlusions. To this end, we introduce Samba, a novel linear-time set-of-sequences model designed to jointly process multiple tracklets by synchronizing the multiple selective state-spaces used to model each tracklet. Samba autoregressively predicts the future track query for each sequence while maintaining synchronized long-term memory representations across tracklets. By integrating Samba into a tracking-by-propagation framework, we propose SambaMOTR, the first tracker effectively addressing the aforementioned issues, including long-range dependencies, tracklet interdependencies, and temporal occlusions. Additionally, we introduce an effective technique for dealing with uncertain observations (MaskObs) and an efficient training recipe to scale SambaMOTR to longer sequences. By modeling long-range dependencies and interactions among tracked objects, SambaMOTR implicitly learns to track objects accurately through occlusions without any hand-crafted heuristics. Our approach significantly surpasses prior state-of-the-art on the DanceTrack, BFT, and SportsMOT datasets.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <hr style="border: 1px solid #e0e0e0; margin: 20px auto; width: 50%;">
+
+  <section class="section pt-0" id="SambaMOTR">
+    <div class="container is-max-desktop">
+      <!-- Method. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 has-text-centered" style="padding-top: 20px;">SambaMOTR</h2>
+          <div class="content has-text-justified">
+
+            <h3 class="title has-text-centered" style="padding-top: 20px;">
+              Architecture
+            </h3>
+
+
+            <img width="100%" src="./static/images/sambamotr.png" alt="SambaMOTR model architecture"/>
+
+            <p>
+              SambaMOTR combines a transformer-based object detector with a set-of-sequences Samba model. The object detector's encoder extracts image features from each frame, which are fed into its decoder together with detect and track queries to detect newborn objects or re-detect tracked ones. The Samba set-of-sequences model is composed of multiple synchronized Samba units that simultaneously process the past memory and currently observed output queries for all tracklets to predict the next track queries and update the track memory. The hidden states of newborn objects are initialized from zero values (barred squares). In case of occlusions or uncertain detections, the corresponding query is masked (red cross) during the Samba update. 
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Method. -->
+    </div>
+  </section>
+
+  <hr style="border: 1px solid #e0e0e0; margin: 20px auto; width: 50%;">
+
+  <section class="section pt-0" id="Samba">
+    <div class="container is-max-desktop">
+      <!-- Method. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 has-text-centered" style="padding-top: 20px;">Samba: Synchronized Set-of-Sequences Modeling</h2>
+          <div class="content has-text-justified">
+            <h3 class="title has-text-centered" style="padding-top: 20px;">
+              Synchronized Selective State-Space Models
+            </h3>
+
+            <img width="100%" src="./static/images/ssm.png" alt="Synchronized Selective State-Space Model"/>
+
+            <!-- <p>
+              We illustrate a set of <i>k</i> selective state space models whose hidden states <i>h<sup>i</sup><sub>t</sub></i> updated with the current observations <i>x<sup>i</sup><sub>t</sub></i> are synchronized by our state synchronization block to derive the synchronized hidden state <i>&#772;h<sup>i</sup><sub>t</sub></i>, used to predict the output <i>y<sup>i</sup><sub>t</sub></i>.
+            </p> -->
+
+            
+            <p>We illustrate a set of <span class="equation">\( k \)</span> synchronized SSMs. A Long-Term Memory Update block updates each hidden state 
+              <span class="equation"> \( \tilde{h}_{t-1}^i \) </span> based on the current observation 
+              <span class="equation"> \( x_t^i \) </span>, resulting in the updated memory 
+              <span class="equation"> \( h_t^i \) </span>. The Memory Synchronization block then derives the synchronized hidden state 
+              <span class="equation"> \( \tilde{h}_t^i \) </span>, which is fed into the Output Update module to predict the output 
+              <span class="equation"> \( y_t^i \) </span>.
+            </p>
+
+            <h3 class="title has-text-centered" style="padding-top: 20px;">
+              Set-of-sequences Model
+            </h3>
+
+
+            <img width="100%" src="./static/images/set-of-sequences.png" alt="Samba model architecture"/>
+            <p>
+              Our set-of-sequences model Samba simultaneously processes an arbitrary number <span class="equation">\( M \)</span> of input sequences. Each sequence is processed by a Samba unit, synchronized with the others thanks to our synchronized state-space model. All Samba units share weights and are composed of a stack of <span class="equation">\( N \)</span>  Samba blocks. A Samba block has the same architecture as a Mamba block, but it adopts our synchronized SSM to synchronize long-term memory representations across the individual SSMs.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Method. -->
+    </div>
+  </section>
+
+  <hr style="border: 1px solid #e0e0e0; margin: 20px auto; width: 50%;">
+
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title has-text-centered" style="margin-top: -20px;">Results</h2>
+          <p class="has-text-justified"> Our work is motivated by the need for a tracking approach that can effectively model these joint motions and interactions over extended periods. By developing SambaMOTR, we aim to capture the intricate dynamics of group movements, enabling more accurate and robust tracking in scenarios where objects' motions are inherently interconnected. Modeling joint motions is crucial in datasets like DanceTrack, where dancers move in synchronization and frequently interact; SportsMOT, where players' movements are highly interdependent based on game strategies and ball position; and BFT (Bird Flock Tracking), where birds exhibit collective behavior influenced by their neighbors. By accounting for these complex interactions, SambaMOTR can maintain consistent tracking even during occlusions, rapid movements, and densely packed scenes typical in these challenging datasets. Here's a glimpse of SambaMOTR's performance: </p>
+
+          <h3 class="title is-4 has-text-centered" style="padding-top: 20px;">DanceTrack Results</h3>
+          <div class="columns is-multiline">
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/dancetrack/dancetrack0038.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/dancetrack/dancetrack0040.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/dancetrack/dancetrack0054.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/dancetrack/dancetrack0067.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/dancetrack/dancetrack0078.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <h3 class="title is-4 has-text-centered" style="padding-top: 20px;">BFT Results</h3>
+          <div class="columns is-multiline">
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/An1002.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/An3001.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/An6001.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/An6010.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/Ci2004.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-third">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/Gr3002.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/Ps4001.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-one-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/bft/Su2003.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <h3 class="title is-4 has-text-centered" style="padding-top: 20px;">SportsMOT Results</h3>
+          <div class="content has-text-justified">
+            <p>Explore our tracking results on SportsMOT across volleyball, basketball, and football categories:</p>
+          </div>
+
+          <h4 class="title is-5 has-text-centered" style="padding-top: 15px;">Volleyball</h4>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/sportsmot/v_4-EmEtrturE_c009.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/sportsmot/v_0kUtTtmLaJA_c010.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <h4 class="title is-5 has-text-centered" style="padding-top: 15px;">Basketball</h4>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/sportsmot/v_4r8QL_wglzQ_c001.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/sportsmot/v_00HRwkvvjtQ_c003.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <h4 class="title is-5 has-text-centered" style="padding-top: 15px;">Football</h4>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/sportsmot/v_i2_L4qquVg0_c007.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-half">
+              <video poster="" autoplay controls muted loop playsinline width="100%">
+                <source src="./static/videos/sportsmot/v_dw7LOz17Omg_c067.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border: 1px solid #e0e0e0; margin: 20px auto; width: 50%;">
+
+  <footer class="footer pt-0 pb-0">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Website template based on
+              <a href="https://github.com/nerfies/nerfies.github.io">
+                Nerfies
+              </a>
+              and licensed under
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                CC-BY-SA-4.0
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
